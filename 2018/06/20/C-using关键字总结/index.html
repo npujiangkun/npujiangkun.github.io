@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="C++," />
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="山河远阔，人间烟火，无一是你，无一不是你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="使用场景一：使用using关键字重新定义访问权限 我们知道： - 当采用private/protected继承时，父类中的public和protected成员在子类中都是private/protected的.这些从父类继承过来的成员，子类虽然可见，   但是子类的实例是不可以直接访问这些private/protected成员的. - 不管采用什么方式的继承修饰符，父类的private成员对子类都是">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ using关键字总结">
+<meta property="og:url" content="http://yoursite.com/2018/06/20/C-using关键字总结/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="山河远阔，人间烟火，无一是你，无一不是你">
+<meta property="og:description" content="使用场景一：使用using关键字重新定义访问权限 我们知道： - 当采用private/protected继承时，父类中的public和protected成员在子类中都是private/protected的.这些从父类继承过来的成员，子类虽然可见，   但是子类的实例是不可以直接访问这些private/protected成员的. - 不管采用什么方式的继承修饰符，父类的private成员对子类都是">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-20T12:37:36.144Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="山河远阔，人间烟火，无一是你，无一不是你">
+<meta name="twitter:title" content="C++ using关键字总结">
+<meta name="twitter:description" content="使用场景一：使用using关键字重新定义访问权限 我们知道： - 当采用private/protected继承时，父类中的public和protected成员在子类中都是private/protected的.这些从父类继承过来的成员，子类虽然可见，   但是子类的实例是不可以直接访问这些private/protected成员的. - 不管采用什么方式的继承修饰符，父类的private成员对子类都是">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/20/C-using关键字总结/"/>
 
 
 
 
 
-  <title>Hexo</title>
+  <title>C++ using关键字总结 | Hexo</title>
   
 
 
@@ -150,8 +152,7 @@
     
   
 
-  <div class="container sidebar-position-right 
-  page-home">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -288,9 +289,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -320,9 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/20/C-using关键字总结/" itemprop="url">C++ using关键字总结</a></h1>
+          <h1 class="post-title" itemprop="name headline">C++ using关键字总结</h1>
         
 
         <div class="post-meta">
@@ -366,6 +365,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
 
@@ -384,22 +388,104 @@
       
 
       
-        
-          <h5 id="使用场景一：使用using关键字重新定义访问权限">使用场景一：使用using关键字重新定义访问权限</h5>
+        <h5 id="使用场景一：使用using关键字重新定义访问权限">使用场景一：使用using关键字重新定义访问权限</h5>
 <p>我们知道：</p>
 <pre><code>- 当采用private/protected继承时，父类中的public和protected成员在子类中都是private/protected的.这些从父类继承过来的成员，子类虽然可见，
   但是子类的实例是不可以直接访问这些private/protected成员的.
 - 不管采用什么方式的继承修饰符，父类的private成员对子类都是不可见的;
 </code></pre>
 <p>如果想让子类的实例访问从父类继承过来的private/protected成员，该怎么办呢？有两种方式可以解决：</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/20/C-using关键字总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<a id="more"></a>
+<p><strong>第一种方式：</strong></p>
+<p>在子类中定义一个public方法，对父类继承过来的private/protected成员进行wrap，这样就可以通过子类的实例间接访问到这些private/protected成员. 示例如下:</p>
+<pre><code>double student::sum() const //public student method.
+{
+	return valarray&lt;double&gt;::sum(); //use privately-inherited method.
+}
+</code></pre>
+<p><strong>第二种方式：</strong></p>
+<p>在子类的public部分使用using关键字声明，即重新定义这些privately-inherited方法/成员的访问权限.</p>
+<pre><code>class student : private std::valarray&lt;double&gt;
+{
+...//
+public:
+	using std::valarray&lt;double&gt;::min;
+	using std::valarray&lt;double&gt;::max;
+...//
+};
+</code></pre>
+<p>这样声明了以后就可以让student类的实例访问private继承过来的valarray<double>::min和valarray<double>::max了.</double></double></p>
+<p>一个完整的例子如下：</p>
+<pre><code>//===========================================================
+//CBase
+class CBase
+{
+public:
+	CBase(int data) : mData(data) {}
+	~CBase() {}
+	string toString() const;
+private:
+	int mData;
+};
+
+string CBase::toString() const
+{
+	stringstream ss;
+	ss &lt;&lt; mData;
+	string temp = &quot;Data: &quot; + ss.str();
+	return temp;
+}
+
+//============================================================
+//CDerived
+class CDerived : private CBase
+{
+public:
+	CDerived(int data = 2)
+		: CBase(data) {}
+	~CDerived() {}
+	using CBase::toString; 
+private:
+	...//
+};
+</code></pre>
+<p>在子类的public部分使用using CBase::toString声明以后，子类的实例就可以访问toString()方法了:</p>
+<pre><code>CDerived* pDerived = new CDerived();
+cout &lt;&lt; pDerived-&gt;toString() &lt;&lt; endl;
+</code></pre>
+<p>注意事项：</p>
+<pre><code>1. 只有子类可见的父类成员才能using,即父类中的public/protected成员才可以，父类的private成员不行.
+2. 使用using关键字修改函数的访问权限时，不用加方法的参数和返回值，不管该方法在父类中重载了多少个版本，只要函数名就可以了.
+   如using CBase::toString;
+</code></pre>
+<hr>
+<h5 id="使用场景二：using关键字可以用于声明模板类型">使用场景二：using关键字可以用于声明模板类型</h5>
+<p>我们知道，typedef可以用于声明类型的别名，示例如下：</p>
+<pre><code>typedef unsigned int size_t;//定义size_t为unsigned int类型.
+</code></pre>
+<p>但是typedef却不能够声明模板类型，而using关键字可以很方便地声明模板类型，示例如下：</p>
+<pre><code>template&lt;typename T&gt;
+using vecType = vector&lt;T&gt;;//声明
+
+vecType&lt;int&gt; Data;//使用，此时vecType&lt;&gt;就是类的模板，和vector&lt;&gt;是一样的.
+Data.push_back(1);
+Data.push_back(2);
+</code></pre>
+<p>在STL源码中有大量的这种使用方式，示例如下：</p>
+<pre><code>// ALIAS TEMPLATE _Iter_value_t
+template&lt;class _Iter&gt;
+	using _Iter_value_t = typename iterator_traits&lt;_Iter&gt;::value_type;
+
+// ALIAS TEMPLATE _Iter_diff_t
+template&lt;class _Iter&gt;
+	using _Iter_diff_t = typename iterator_traits&lt;_Iter&gt;::difference_type;
+
+// ALIAS TEMPLATE _Iter_cat_t
+template&lt;class _Iter&gt;
+	using _Iter_cat_t = typename iterator_traits&lt;_Iter&gt;::iterator_category;
+</code></pre>
+<hr>
+
       
     </div>
     
@@ -409,164 +495,70 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="清风小白 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="清风小白 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="清风小白">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/photo.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/18/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-18T16:02:35+08:00">
-                2018-06-18
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-18T16:02:35+08:00">
-                2018-06-18
-              </time>
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/C/" rel="tag"># C++</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/18/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -576,10 +568,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -587,6 +580,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -607,8 +604,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -707,6 +713,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用场景一：使用using关键字重新定义访问权限"><span class="nav-number">1.</span> <span class="nav-text">使用场景一：使用using关键字重新定义访问权限</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用场景二：using关键字可以用于声明模板类型"><span class="nav-number">2.</span> <span class="nav-text">使用场景二：using关键字可以用于声明模板类型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -856,6 +878,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
