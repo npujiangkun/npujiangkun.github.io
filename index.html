@@ -350,7 +350,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-20T20:55:55+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-20T21:00:51+08:00">
                 2018-06-20
               </time>
             
@@ -385,58 +385,16 @@
 
       
         
-          
-            <p>引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。</p>
+          <p>引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。</p>
 <hr>
 <p>一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。</p>
-<pre><code>mutable关键字只能修饰类的非静态和非常量的成员变量，即不能与static和const连用。
-
-class Info
-{
-public:
-	Info() : mValue(0)
-	{
-	}
-	inline void Output() const //并不会修改类的状态，但会修改与状态无关的成员.
-	{
-		mValue++;
-		cout &lt;&lt; &quot;Output the object: &quot; &lt;&lt; this &lt;&lt; endl;
-	}
-	inline void GetOutputTimes() const { return mValue; }
-
-private:
-	mutable int mValue;//表示类对象输出的次数.
-};
-
-//Test case.
-{
-	Info* pObj = new Info();
-	pObj-&gt;Output();
-	pObj-&gt;Output();
-	cout &lt;&lt; pObj-&gt;GetOutputTimes() &lt;&lt; endl;//输出2.
-}
-</code></pre>
-<p>在以上代码段中，const类型的成员函数Output()会修改成员变量mValue。如果不将mValue声明为mutable类型是不行的。</p>
-<p>二、即使类/结构体对象是const的，但是仍然可以修改它的mutable成员.</p>
-<pre><code>struct Data
-{
-	int a;
-	mutable int b;//can modify anytime.
-};
-
-//Test mutable
-{
-	const Data *data = new Data{ 1, 2 };
-	data-&gt;b = 3;
-	cout &lt;&lt; &quot;a = &quot; &lt;&lt; data-&gt;a &lt;&lt; &quot;, b = &quot; &lt;&lt; data-&gt;b &lt;&lt; endl;
-}
-</code></pre>
-<hr>
-<p><strong>volatile关键字</strong></p>
-<pre><code>用volatile关键字修饰变量，实际上是告诉编译器，CPU每次使用该变量的时候可以直接从内存中读取，而不是在寄存器中读取。
-volatile关键字保证了变量在寄存器中被修改了以后会及时地刷新到内存中，保持了寄存器和memory的一致性。</code></pre>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/C-mutable关键字/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -765,7 +723,7 @@ volatile关键字保证了变量在寄存器中被修改了以后会及时地刷
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-id-card"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">清风小白</span>
 
