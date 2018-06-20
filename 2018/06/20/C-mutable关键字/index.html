@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Voyager">
 <meta property="og:description" content="引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。  一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-20T14:10:12.358Z">
+<meta property="og:updated_time" content="2018-06-20T14:12:44.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ mutable关键字">
 <meta name="twitter:description" content="引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。  一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。">
@@ -352,7 +352,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-20T22:10:12+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-20T22:12:44+08:00">
                 2018-06-20
               </time>
             
@@ -424,7 +424,7 @@ private:
 </code></pre>
 <p>在以上代码段中，const类型的成员函数Output()会修改成员变量mValue。如果不将mValue声明为mutable类型是不行的。</p>
 <p>二、即使类/结构体对象是const的，但是仍然可以修改它的mutable成员.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="keyword">int</span> b;<span class="comment">//can modify anytime.</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Test mutable</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">const</span> Data *data = <span class="keyword">new</span> Data&#123; <span class="number">1</span>, <span class="number">2</span> &#125;;</span><br><span class="line">	data-&gt;b = <span class="number">3</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"a = "</span> &lt;&lt; data-&gt;a &lt;&lt; <span class="string">", b = "</span> &lt;&lt; data-&gt;b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">mutable</span> <span class="keyword">int</span> b;<span class="comment">//can modify anytime.</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Test mutable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> Data *data = <span class="keyword">new</span> Data&#123; <span class="number">1</span>, <span class="number">2</span> &#125;;</span><br><span class="line">    data-&gt;b = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a = "</span> &lt;&lt; data-&gt;a &lt;&lt; <span class="string">", b = "</span> &lt;&lt; data-&gt;b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <p><strong>volatile关键字</strong></p>
 <pre><code>用volatile关键字修饰变量，实际上是告诉编译器，CPU每次使用该变量的时候可以直接从内存中读取，而不是在寄存器中读取。
