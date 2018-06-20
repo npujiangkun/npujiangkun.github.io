@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Voyager">
 <meta property="og:description" content="引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。  一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-20T14:12:44.547Z">
+<meta property="og:updated_time" content="2018-06-20T14:16:03.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ mutable关键字">
 <meta name="twitter:description" content="引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。  一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。">
@@ -352,7 +352,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-20T22:12:44+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-20T22:16:03+08:00">
                 2018-06-20
               </time>
             
@@ -396,32 +396,8 @@
 <p>一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。</p>
 <a id="more"></a>
 <pre><code>mutable关键字只能修饰类的非静态和非常量的成员变量，即不能与static和const连用。
-
-class Info
-{
-public:
-	Info() : mValue(0)
-	{
-	}
-	inline void Output() const //并不会修改类的状态，但会修改与状态无关的成员.
-	{
-		mValue++;
-		cout &lt;&lt; &quot;Output the object: &quot; &lt;&lt; this &lt;&lt; endl;
-	}
-	inline void GetOutputTimes() const { return mValue; }
-
-private:
-	mutable int mValue;//表示类对象输出的次数.
-};
-
-//Test case.
-{
-	Info* pObj = new Info();
-	pObj-&gt;Output();
-	pObj-&gt;Output();
-	cout &lt;&lt; pObj-&gt;GetOutputTimes() &lt;&lt; endl;//输出2.
-}
 </code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Info</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Info() : mValue(<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Output</span><span class="params">()</span> <span class="keyword">const</span> <span class="comment">//并不会修改类的状态，但会修改与状态无关的成员.</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		mValue++;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Output the object: "</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">GetOutputTimes</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mValue; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">mutable</span> <span class="keyword">int</span> mValue;<span class="comment">//表示类对象输出的次数.</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Test case.</span></span><br><span class="line">&#123;</span><br><span class="line">	Info* pObj = <span class="keyword">new</span> Info();</span><br><span class="line">	pObj-&gt;Output();</span><br><span class="line">	pObj-&gt;Output();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; pObj-&gt;GetOutputTimes() &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//输出2.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在以上代码段中，const类型的成员函数Output()会修改成员变量mValue。如果不将mValue声明为mutable类型是不行的。</p>
 <p>二、即使类/结构体对象是const的，但是仍然可以修改它的mutable成员.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">mutable</span> <span class="keyword">int</span> b;<span class="comment">//can modify anytime.</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Test mutable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> Data *data = <span class="keyword">new</span> Data&#123; <span class="number">1</span>, <span class="number">2</span> &#125;;</span><br><span class="line">    data-&gt;b = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a = "</span> &lt;&lt; data-&gt;a &lt;&lt; <span class="string">", b = "</span> &lt;&lt; data-&gt;b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
