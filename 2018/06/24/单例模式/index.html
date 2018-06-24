@@ -444,21 +444,21 @@
 <span class="line"><span class="class">&#123;</span></span>
 <span class="line"><span class="keyword">public</span>:</span>
 <span class="line">    <span class="function"><span class="keyword">static</span> Singleton* <span class="title">getInstance</span><span class="params">()</span></span>;</span>
-<span class="line">true</span>
+<span class="line">	</span>
 <span class="line"><span class="keyword">private</span>:</span>
-<span class="line">trueSingleton() &#123;&#125;</span>
+<span class="line">	Singleton() &#123;&#125;</span>
 <span class="line">    ~Singleton() &#123;&#125;</span>
-<span class="line">true<span class="keyword">static</span> Singleton *m_pInstance;<span class="comment">//类的唯一实例.</span></span>
+<span class="line">	<span class="keyword">static</span> Singleton *m_pInstance;<span class="comment">//类的唯一实例.</span></span>
 <span class="line">&#125;;</span>
-<span class="line">true</span>
+<span class="line">	</span>
 <span class="line">Singleton* Singleton::m_pInstance = <span class="literal">nullptr</span>; <span class="comment">//静态成员，类体外初始化.</span></span>
 <span class="line">Singleton* Singleton::getInstance() <span class="comment">//第一次调用该函数的时候才会创建该类的唯一实例，所以是“懒汉模式”.</span></span>
 <span class="line">&#123;</span>
-<span class="line">true<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
-<span class="line">true&#123;</span>
-<span class="line">truetruem_pInstance = <span class="keyword">new</span> Singleton();</span>
-<span class="line">true&#125;</span>
-<span class="line">true<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
+<span class="line">	&#123;</span>
+<span class="line">		m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <p><strong>饿汉模式</strong></p>
@@ -482,18 +482,18 @@
 </pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span></span>
 <span class="line"><span class="class">&#123;</span></span>
 <span class="line"><span class="keyword">public</span>:</span>
-<span class="line">true<span class="function"><span class="keyword">static</span> <span class="keyword">const</span> Singleton* <span class="title">getInstance</span><span class="params">()</span></span>;</span>
+<span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">const</span> Singleton* <span class="title">getInstance</span><span class="params">()</span></span>;</span>
 <span class="line"></span>
 <span class="line"><span class="keyword">private</span>:</span>
-<span class="line">trueSingleton() &#123;&#125;</span>
-<span class="line">true~Singleton() &#123;&#125;</span>
-<span class="line">true<span class="keyword">static</span> <span class="keyword">const</span> Singleton *m_pInstance;<span class="comment">//类的静态常量</span></span>
+<span class="line">	Singleton() &#123;&#125;</span>
+<span class="line">	~Singleton() &#123;&#125;</span>
+<span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> Singleton *m_pInstance;<span class="comment">//类的静态常量</span></span>
 <span class="line">&#125;;</span>
 <span class="line"></span>
 <span class="line"><span class="keyword">const</span> Singleton* Singleton::m_pInstance = <span class="keyword">new</span> Singleton();<span class="comment">//体外初始化.</span></span>
 <span class="line"><span class="keyword">const</span> Singleton* Singleton::getInstance()</span>
 <span class="line">&#123;</span>
-<span class="line">true<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <p>注意这里面需要注意两点：</p>
@@ -513,11 +513,11 @@
 <span class="line">8</span>
 </pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
 <span class="line">&#123;</span>
-<span class="line">true<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
-<span class="line">true&#123;</span>
-<span class="line">truetruem_pInstance = <span class="keyword">new</span> Singleton();</span>
-<span class="line">true&#125;</span>
-<span class="line">true<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
+<span class="line">	&#123;</span>
+<span class="line">		m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <p>这段代码是非线程安全的，假设A线程进入if (...) 还没有new Singleton就被B线程抢占，B线程同样会进入if(...)判断。这样，这两个线程都会去new一个Singleton()实例，出现多线程访问问题。</p>
@@ -535,13 +535,13 @@
 <span class="line">10</span>
 </pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
 <span class="line">&#123;</span>
-<span class="line">truemutex.lock();</span>
-<span class="line">true<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
-<span class="line">true&#123;</span>
-<span class="line">truetruem_pInstance = <span class="keyword">new</span> Singleton();</span>
-<span class="line">true&#125;</span>
-<span class="line">truemutex.unlock();</span>
-<span class="line">true<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">	mutex.lock();</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
+<span class="line">	&#123;</span>
+<span class="line">		m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">	&#125;</span>
+<span class="line">	mutex.unlock();</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <p><strong>双检锁</strong></p>
@@ -561,16 +561,16 @@
 <span class="line">13</span>
 </pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
 <span class="line">&#123;</span>
-<span class="line">true<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//防止无意义地加锁，解锁</span></span>
-<span class="line">true&#123;</span>
-<span class="line">truetruemutex.lock();</span>
-<span class="line">truetrue<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//里面的判断不能少，因为外层一个if(..)是非线程安全的.</span></span>
-<span class="line">truetrue&#123;</span>
-<span class="line">truetruetruem_pInstance = <span class="keyword">new</span> Singleton();</span>
-<span class="line">truetrue&#125;</span>
-<span class="line">truetruemutex.unlock();			</span>
-<span class="line">true&#125;</span>
-<span class="line">true<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//防止无意义地加锁，解锁</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		mutex.lock();</span>
+<span class="line">		<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//里面的判断不能少，因为外层一个if(..)是非线程安全的.</span></span>
+<span class="line">		&#123;</span>
+<span class="line">			m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">		&#125;</span>
+<span class="line">		mutex.unlock();			</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <p><strong>实例初始化</strong></p>
@@ -591,17 +591,17 @@
 <span class="line">14</span>
 </pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
 <span class="line">&#123;</span>
-<span class="line">true<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//防止无意义地加锁，解锁</span></span>
-<span class="line">true&#123;</span>
-<span class="line">truetruemutex.lock();</span>
-<span class="line">truetrue<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//里面的判断不能少，因为外层一个if(..)是非线程安全的.</span></span>
-<span class="line">truetrue&#123;</span>
-<span class="line">truetruetrueSingleton *temp = <span class="keyword">new</span> Singleton();<span class="comment">//没有初始化完成之前不要使用m_pInstance访问内存.</span></span>
-<span class="line">truetruetruem_pInstance = temp;</span>
-<span class="line">truetrue&#125;</span>
-<span class="line">truetruemutex.unlock();			</span>
-<span class="line">true&#125;</span>
-<span class="line">true<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//防止无意义地加锁，解锁</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		mutex.lock();</span>
+<span class="line">		<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//里面的判断不能少，因为外层一个if(..)是非线程安全的.</span></span>
+<span class="line">		&#123;</span>
+<span class="line">			Singleton *temp = <span class="keyword">new</span> Singleton();<span class="comment">//没有初始化完成之前不要使用m_pInstance访问内存.</span></span>
+<span class="line">			m_pInstance = temp;</span>
+<span class="line">		&#125;</span>
+<span class="line">		mutex.unlock();			</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <hr>
