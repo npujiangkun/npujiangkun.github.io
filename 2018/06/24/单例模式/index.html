@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="设计模式之单例模式  在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下。  懒汉模式 所谓的懒汉模式就是如果不调用getInstance()方法，类的唯一实例是不存在的，只有调用的时候才会生成这个实例；  class Singleton { public: 	sta">
+<meta name="description" content="设计模式之单例模式  在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下.">
 <meta name="keywords" content="C++,设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单例模式">
 <meta property="og:url" content="http://yoursite.com/2018/06/24/单例模式/index.html">
 <meta property="og:site_name" content="Voyager">
-<meta property="og:description" content="设计模式之单例模式  在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下。  懒汉模式 所谓的懒汉模式就是如果不调用getInstance()方法，类的唯一实例是不存在的，只有调用的时候才会生成这个实例；  class Singleton { public: 	sta">
+<meta property="og:description" content="设计模式之单例模式  在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-24T05:36:44.397Z">
+<meta property="og:updated_time" content="2018-06-24T05:47:26.292Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单例模式">
-<meta name="twitter:description" content="设计模式之单例模式  在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下。  懒汉模式 所谓的懒汉模式就是如果不调用getInstance()方法，类的唯一实例是不存在的，只有调用的时候才会生成这个实例；  class Singleton { public: 	sta">
+<meta name="twitter:description" content="设计模式之单例模式  在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下.">
 
 
 
@@ -352,7 +352,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-24T13:36:44+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-24T13:47:26+08:00">
                 2018-06-24
               </time>
             
@@ -415,52 +415,87 @@
       
         <h3 id="设计模式之单例模式">设计模式之单例模式</h3>
 <hr>
-<p>在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下。</p>
+<p>在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下.</p>
+<a id="more"></a>
 <hr>
 <p><strong>懒汉模式</strong></p>
-<pre><code>所谓的懒汉模式就是如果不调用getInstance()方法，类的唯一实例是不存在的，只有调用的时候才会生成这个实例；
-
-class Singleton
-{
-public:
-	static Singleton* getInstance();
-
-private:
-	Singleton() {}
-	~Singleton() {}
-	static Singleton *m_pInstance;//类的唯一实例.
-};
-
-Singleton* Singleton::m_pInstance = nullptr; //静态成员，类体外初始化.
-Singleton* Singleton::getInstance() //第一次调用该函数的时候才会创建该类的唯一实例，所以是“懒汉模式”.
-{
-	if (nullptr == m_pInstance )
-	{
-		m_pInstance = new Singleton();
-	}
-	return m_pInstance;
-}
-</code></pre>
+<p>所谓的懒汉模式就是如果不调用getInstance()方法，类的唯一实例是不存在的，只有调用的时候才会生成这个实例；</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span></span>
+<span class="line"><span class="class">&#123;</span></span>
+<span class="line"><span class="keyword">public</span>:</span>
+<span class="line">	<span class="function"><span class="keyword">static</span> Singleton* <span class="title">getInstance</span><span class="params">()</span></span>;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">private</span>:</span>
+<span class="line">	Singleton() &#123;&#125;</span>
+<span class="line">	~Singleton() &#123;&#125;</span>
+<span class="line">	<span class="keyword">static</span> Singleton *m_pInstance;<span class="comment">//类的唯一实例.</span></span>
+<span class="line">&#125;;</span>
+<span class="line"></span>
+<span class="line">Singleton* Singleton::m_pInstance = <span class="literal">nullptr</span>; <span class="comment">//静态成员，类体外初始化.</span></span>
+<span class="line">Singleton* Singleton::getInstance() <span class="comment">//第一次调用该函数的时候才会创建该类的唯一实例，所以是“懒汉模式”.</span></span>
+<span class="line">&#123;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
+<span class="line">	&#123;</span>
+<span class="line">		m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <p><strong>饿汉模式</strong></p>
-<pre><code>所谓的饿汉模式就是不管调不调用getInstance()方法，类的唯一实例都是创建好的，调用的时候会将该实例作为返回值返回;
-
-class Singleton
-{
-public:
-	static const Singleton* getInstance();
-
-private:
-	Singleton() {}
-	~Singleton() {}
-	static const Singleton *m_pInstance;//类的静态常量
-};
-
-const Singleton* Singleton::m_pInstance = new Singleton();//体外初始化.
-const Singleton* Singleton::getInstance()
-{
-	return m_pInstance;
-}
-</code></pre>
+<p>s所谓的饿汉模式就是不管调不调用getInstance()方法，类的唯一实例都是创建好的，调用的时候会将该实例作为返回值返回;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span></span>
+<span class="line"><span class="class">&#123;</span></span>
+<span class="line"><span class="keyword">public</span>:</span>
+<span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">const</span> Singleton* <span class="title">getInstance</span><span class="params">()</span></span>;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">private</span>:</span>
+<span class="line">	Singleton() &#123;&#125;</span>
+<span class="line">	~Singleton() &#123;&#125;</span>
+<span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> Singleton *m_pInstance;<span class="comment">//类的静态常量</span></span>
+<span class="line">&#125;;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">const</span> Singleton* Singleton::m_pInstance = <span class="keyword">new</span> Singleton();<span class="comment">//体外初始化.</span></span>
+<span class="line"><span class="keyword">const</span> Singleton* Singleton::getInstance()</span>
+<span class="line">&#123;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <p>注意这里面需要注意两点：</p>
 <pre><code>1. m_pInstance是类的静态常量，是非整型或枚举类型的，因此只能在类体外进行初始化;
 2. 类的静态常量初始化是在主线程中，调用main()函数之前完成，因此是线程安全的.
@@ -468,62 +503,107 @@ const Singleton* Singleton::getInstance()
 <hr>
 <p><strong>线程安全</strong></p>
 <p>懒汉模式可能存在着线程安全问题：</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	if (nullptr == m_pInstance )
-	{
-		m_pInstance = new Singleton();
-	}
-	return m_pInstance;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
+<span class="line">&#123;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
+<span class="line">	&#123;</span>
+<span class="line">		m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <p>这段代码是非线程安全的，假设A线程进入if (...) 还没有new Singleton就被B线程抢占，B线程同样会进入if(...)判断。这样，这两个线程都会去new一个Singleton()实例，出现多线程访问问题。</p>
 <p><strong>加锁</strong></p>
 <p>解决上述问题的办法之一是加锁.</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	mutex.lock();
-	if (nullptr == m_pInstance )
-	{
-		m_pInstance = new Singleton();
-	}
-	mutex.unlock();
-	return m_pInstance;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
+<span class="line">&#123;</span>
+<span class="line">	mutex.lock();</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance )</span>
+<span class="line">	&#123;</span>
+<span class="line">		m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">	&#125;</span>
+<span class="line">	mutex.unlock();</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <p><strong>双检锁</strong></p>
 <p>上面的代码在nullptr != m_pInstance时会出现无意义的加锁，解锁动作，因此可以改进如下，双重check：</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	if (nullptr == m_pInstance ) //防止无意义地加锁，解锁
-	{
-		mutex.lock();
-		if (nullptr == m_pInstance ) //里面的判断不能少，因为外层一个if(..)是非线程安全的.
-		{
-			m_pInstance = new Singleton();
-		}
-		mutex.unlock();			
-	}
-	return m_pInstance;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
+<span class="line">&#123;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//防止无意义地加锁，解锁</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		mutex.lock();</span>
+<span class="line">		<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//里面的判断不能少，因为外层一个if(..)是非线程安全的.</span></span>
+<span class="line">		&#123;</span>
+<span class="line">			m_pInstance = <span class="keyword">new</span> Singleton();</span>
+<span class="line">		&#125;</span>
+<span class="line">		mutex.unlock();			</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <p><strong>实例初始化</strong></p>
 <p>实际上还可以进行改进，就是在创建类的唯一实例时，类可能还没有初始化完成，只是分配了内存并将内存地址赋值给m_pInstance了。此时其它线程使用m_pInstance就会有问题，修改如下：</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	if (nullptr == m_pInstance ) //防止无意义地加锁，解锁
-	{
-		mutex.lock();
-		if (nullptr == m_pInstance ) //里面的判断不能少，因为外层一个if(..)是非线程安全的.
-		{
-			Singleton *temp = new Singleton();//没有初始化完成之前不要使用m_pInstance访问内存.
-			m_pInstance = temp;
-		}
-		mutex.unlock();			
-	}
-	return m_pInstance;
-}
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">Singleton* Singleton::getInstance()</span>
+<span class="line">&#123;</span>
+<span class="line">	<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//防止无意义地加锁，解锁</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		mutex.lock();</span>
+<span class="line">		<span class="keyword">if</span> (<span class="literal">nullptr</span> == m_pInstance ) <span class="comment">//里面的判断不能少，因为外层一个if(..)是非线程安全的.</span></span>
+<span class="line">		&#123;</span>
+<span class="line">			Singleton *temp = <span class="keyword">new</span> Singleton();<span class="comment">//没有初始化完成之前不要使用m_pInstance访问内存.</span></span>
+<span class="line">			m_pInstance = temp;</span>
+<span class="line">		&#125;</span>
+<span class="line">		mutex.unlock();			</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> m_pInstance;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <hr>
 
       

@@ -517,7 +517,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-06-24T13:36:44+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-24T13:47:26+08:00">
                 2018-06-24
               </time>
             
@@ -574,121 +574,16 @@
 
       
         
-          
-            <h3 id="设计模式之单例模式">设计模式之单例模式</h3>
+          <h3 id="设计模式之单例模式">设计模式之单例模式</h3>
 <hr>
-<p>在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下。</p>
-<hr>
-<p><strong>懒汉模式</strong></p>
-<pre><code>所谓的懒汉模式就是如果不调用getInstance()方法，类的唯一实例是不存在的，只有调用的时候才会生成这个实例；
-
-class Singleton
-{
-public:
-	static Singleton* getInstance();
-
-private:
-	Singleton() {}
-	~Singleton() {}
-	static Singleton *m_pInstance;//类的唯一实例.
-};
-
-Singleton* Singleton::m_pInstance = nullptr; //静态成员，类体外初始化.
-Singleton* Singleton::getInstance() //第一次调用该函数的时候才会创建该类的唯一实例，所以是“懒汉模式”.
-{
-	if (nullptr == m_pInstance )
-	{
-		m_pInstance = new Singleton();
-	}
-	return m_pInstance;
-}
-</code></pre>
-<p><strong>饿汉模式</strong></p>
-<pre><code>所谓的饿汉模式就是不管调不调用getInstance()方法，类的唯一实例都是创建好的，调用的时候会将该实例作为返回值返回;
-
-class Singleton
-{
-public:
-	static const Singleton* getInstance();
-
-private:
-	Singleton() {}
-	~Singleton() {}
-	static const Singleton *m_pInstance;//类的静态常量
-};
-
-const Singleton* Singleton::m_pInstance = new Singleton();//体外初始化.
-const Singleton* Singleton::getInstance()
-{
-	return m_pInstance;
-}
-</code></pre>
-<p>注意这里面需要注意两点：</p>
-<pre><code>1. m_pInstance是类的静态常量，是非整型或枚举类型的，因此只能在类体外进行初始化;
-2. 类的静态常量初始化是在主线程中，调用main()函数之前完成，因此是线程安全的.
-</code></pre>
-<hr>
-<p><strong>线程安全</strong></p>
-<p>懒汉模式可能存在着线程安全问题：</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	if (nullptr == m_pInstance )
-	{
-		m_pInstance = new Singleton();
-	}
-	return m_pInstance;
-}
-</code></pre>
-<p>这段代码是非线程安全的，假设A线程进入if (...) 还没有new Singleton就被B线程抢占，B线程同样会进入if(...)判断。这样，这两个线程都会去new一个Singleton()实例，出现多线程访问问题。</p>
-<p><strong>加锁</strong></p>
-<p>解决上述问题的办法之一是加锁.</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	mutex.lock();
-	if (nullptr == m_pInstance )
-	{
-		m_pInstance = new Singleton();
-	}
-	mutex.unlock();
-	return m_pInstance;
-}
-</code></pre>
-<p><strong>双检锁</strong></p>
-<p>上面的代码在nullptr != m_pInstance时会出现无意义的加锁，解锁动作，因此可以改进如下，双重check：</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	if (nullptr == m_pInstance ) //防止无意义地加锁，解锁
-	{
-		mutex.lock();
-		if (nullptr == m_pInstance ) //里面的判断不能少，因为外层一个if(..)是非线程安全的.
-		{
-			m_pInstance = new Singleton();
-		}
-		mutex.unlock();			
-	}
-	return m_pInstance;
-}
-</code></pre>
-<p><strong>实例初始化</strong></p>
-<p>实际上还可以进行改进，就是在创建类的唯一实例时，类可能还没有初始化完成，只是分配了内存并将内存地址赋值给m_pInstance了。此时其它线程使用m_pInstance就会有问题，修改如下：</p>
-<pre><code>Singleton* Singleton::getInstance()
-{
-	if (nullptr == m_pInstance ) //防止无意义地加锁，解锁
-	{
-		mutex.lock();
-		if (nullptr == m_pInstance ) //里面的判断不能少，因为外层一个if(..)是非线程安全的.
-		{
-			Singleton *temp = new Singleton();//没有初始化完成之前不要使用m_pInstance访问内存.
-			m_pInstance = temp;
-		}
-		mutex.unlock();			
-	}
-	return m_pInstance;
-}
-</code></pre>
-<hr>
-
-          
+<p>在某些应用场景下，一个类只能有一个实例，如Android系统中的一些系统服务，SurfaceFlinger等，都是被设计成单例模式，单例模式可以分为两种，懒汉模式和饿汉模式，介绍如下.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/24/单例模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
