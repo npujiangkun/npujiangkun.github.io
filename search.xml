@@ -4,6 +4,9 @@
     <title><![CDATA[C++ mutable关键字]]></title>
     <url>%2F2018%2F06%2F20%2FC-mutable%E5%85%B3%E9%94%AE%E5%AD%97%2F</url>
     <content type="text"><![CDATA[引言：对于类的成员函数来说，如果它不修改类的状态，一般将其声明为const函数. 但是如果我们想在类的const成员函数中修改与类的状态无关的成员变量，那么该怎么做呢？答案是使用mutable关键字。 一、mutable关键字是为了突破const关键字的限制而引入的，修饰一个类的成员变量，表示这个成员变量在const函数中也是可以被修改的。 mutable关键字只能修饰类的非静态和非常量的成员变量，即不能与static和const连用。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 class Info &#123; public: Info() : mValue(0) &#123; &#125; inline void Output() const //并不会修改类的状态，但会修改与状态无关的成员. &#123; mValue++; cout &lt;&lt; "Output the object: " &lt;&lt; this &lt;&lt; endl; &#125; inline void GetOutputTimes() const &#123; return mValue; &#125; private: mutable int mValue;//表示类对象输出的次数. &#125;; //Test case. &#123; Info* pObj = new Info(); pObj-&gt;Output(); pObj-&gt;Output(); cout &lt;&lt; pObj-&gt;GetOutputTimes() &lt;&lt; endl;//输出2. &#125; 在以上代码段中，const类型的成员函数Output()会修改成员变量mValue。如果不将mValue声明为mutable类型是不行的。 二、即使类/结构体对象是const的，但是仍然可以修改它的mutable成员. 1 2 3 4 5 6 7 8 9 10 11 12 13 struct Data &#123; int a; mutable int b;//can modify anytime. &#125;; //Test mutable &#123; const Data *data = new Data&#123; 1, 2 &#125;; data-&gt;b = 3; cout &lt;&lt; "a = " &lt;&lt; data-&gt;a &lt;&lt; ", b = " &lt;&lt; data-&gt;b &lt;&lt; endl; &#125; volatile关键字 用volatile关键字修饰变量，实际上是告诉编译器，CPU每次使用该变量的时候可以直接从内存中读取，而不是在寄存器中读取。 volatile关键字保证了变量在寄存器中被修改了以后会及时地刷新到内存中，保持了寄存器和memory的一致性。]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
       <tags>
         <tag>C++</tag>
       </tags>
