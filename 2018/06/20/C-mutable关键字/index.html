@@ -448,26 +448,26 @@
 <span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Info</span></span></span>
 <span class="line"><span class="class">&#123;</span></span>
 <span class="line"><span class="keyword">public</span>:</span>
-<span class="line">	Info() : mValue(<span class="number">0</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Output</span><span class="params">()</span> <span class="keyword">const</span> <span class="comment">//并不会修改类的状态，但会修改与状态无关的成员.</span></span></span>
+<span class="line">    Info() : mValue(<span class="number">0</span>)</span>
+<span class="line">    &#123;</span>
+<span class="line">    &#125;</span>
+<span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Output</span><span class="params">()</span> <span class="keyword">const</span> <span class="comment">//并不会修改类的状态，但会修改与状态无关的成员.</span></span></span>
 <span class="line"><span class="function">	</span>&#123;</span>
-<span class="line">		mValue++;</span>
-<span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Output the object: "</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="built_in">endl</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">GetOutputTimes</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mValue; &#125;</span>
+<span class="line">        mValue++;</span>
+<span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Output the object: "</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="built_in">endl</span>;</span>
+<span class="line">    &#125;</span>
+<span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">GetOutputTimes</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mValue; &#125;</span>
 <span class="line"></span>
 <span class="line"><span class="keyword">private</span>:</span>
-<span class="line">	<span class="keyword">mutable</span> <span class="keyword">int</span> mValue;<span class="comment">//表示类对象输出的次数.</span></span>
+<span class="line">    <span class="keyword">mutable</span> <span class="keyword">int</span> mValue;<span class="comment">//表示类对象输出的次数.</span></span>
 <span class="line">&#125;;</span>
 <span class="line"></span>
 <span class="line"><span class="comment">//Test case.</span></span>
 <span class="line">&#123;</span>
-<span class="line">	Info* pObj = <span class="keyword">new</span> Info();</span>
-<span class="line">	pObj-&gt;Output();</span>
-<span class="line">	pObj-&gt;Output();</span>
-<span class="line">	<span class="built_in">cout</span> &lt;&lt; pObj-&gt;GetOutputTimes() &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//输出2.</span></span>
+<span class="line">    Info* pObj = <span class="keyword">new</span> Info();</span>
+<span class="line">    pObj-&gt;Output();</span>
+<span class="line">    pObj-&gt;Output();</span>
+<span class="line">    <span class="built_in">cout</span> &lt;&lt; pObj-&gt;GetOutputTimes() &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//输出2.</span></span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <p>在以上代码段中，const类型的成员函数Output()会修改成员变量mValue。如果不将mValue声明为mutable类型是不行的。</p>
