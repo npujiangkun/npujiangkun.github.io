@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA['Cuda']]></title>
+    <title><![CDATA[Cuda]]></title>
     <url>%2F2020%2F05%2F29%2FCuda%2F</url>
-    <content type="text"><![CDATA[引言：占坑，Cuda随笔.]]></content>
+    <content type="text"><![CDATA[引言：Cuda随笔. Zero-Copy memory： 一般情况下，CPU是无法访问GPU的变量的，GPU也无法访问CPU的变量. 只有一种例外：Zero-Copy memory, 是指映射到GPU虚拟地址空间的pinned(non-pageable) memory. GPU和CPU都可以直接访问Zero-Copy memory. 使用Zero-Copy memory需要以下三个步骤： Allocated mapped, pinned host memory：cudaError_t cudaHostAlloc(void **pHost, size_t count, unsigned int flags); 参数flags可以设置pinned memory的属性： cudaHostAllocDefault: 使得cudaHostAlloc()的行为与cudaMallocHost()一样. cudaHostAllocPortable: 使得pinned memory可以被所有的cuda contexts的访问，而不仅仅是当前调用cudaHostAlloc()的context. 设置该flag以后，Cuda驱动会将pinned memory映射到所有的GPU上. cudaHostAllocWriteCombined: 表示pinned memory是write-combined memory，一般在CPU写，GPU读的buffer中设置这个flag. cudaHostAllocMapped： 表示pinned memory会被映射到GPU的虚拟地址空间. Acquired the device pointer to the mapped, pinned memory：cudaError_t cudaHostGetDevicePointer(void **pDevice, void *pHost, unsigned int flags); 获取pinned memory映射到GPU虚拟地址空间以后对应的GPU VA, 即Device pointer. Passed the device pointer to your kernel. 需要注意两点: (1) CPU和GPU在同时访问的zero-copy memory的时候需要做好同步，否则会出现数据一致性问题；(2) Zero-Copy memory只有在CPU和GPU之间进行小规模的数据交换/共享的时候才能够提升性能，因为每次memory transaction都需要经过PCIe总线，latency比较大，因此不适用大规模的数据交换/共享. Unified Virtual Addressing: 在compute capability 2.0之后的Devices上支持一种特殊的寻址模式Unified Virtual Addressing, UVA. 在这种寻址模式下，CPU和GPU共享同一个虚拟地址空间，因此对于一个指针来说，CPU和GPU都可以通过它访问同一块memory. 类似Mali GPU的PMEM(CPU_VA == GPU_VA). 我们知道，在UVA出现之前，我们需要分别管理CPU VA和GPU VA，比较麻烦；在UVA出现之后，CPU VA和GPU VA是统一的，代码比较简洁， 例如： 1 2 3 4 5 6 7 8 // allocate zero-copy memory at the host side cudaHostAlloc((void **)&amp;h_A, nBytes, cudaHostAllocMapped); cudaHostAlloc((void **)&amp;h_B, nBytes, cudaHostAllocMapped); // initialize data at the host side initialData(h_A, nElem); initialData(h_B, nElem); // invoke the kernel with zero-copy memory sumArraysZeroCopy&lt;&lt;&lt;grid, block&gt;&gt;&gt;(h_A, h_B, d_C, nElem);]]></content>
       <categories>
         <category>Cuda</category>
       </categories>

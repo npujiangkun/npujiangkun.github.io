@@ -489,7 +489,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/29/Cuda/" itemprop="url">'Cuda'</a></h1>
+                <a class="post-title-link" href="/2020/05/29/Cuda/" itemprop="url">Cuda</a></h1>
         
 
         <div class="post-meta">
@@ -517,8 +517,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-05-29T21:29:52+08:00">
-                2020-05-29
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-30T21:45:55+08:00">
+                2020-05-30
               </time>
             
           </span>
@@ -574,7 +574,9 @@
 
       
         
-          <p>引言：占坑，Cuda随笔.</p>
+          <p>引言：Cuda随笔.</p>
+<hr>
+<p><strong>Zero-Copy memory：</strong> 一般情况下，CPU是无法访问GPU的变量的，GPU也无法访问CPU的变量. 只有一种例外：Zero-Copy memory, 是指映射到GPU虚拟地址空间的pinned(non-pageable) memory. GPU和CPU都可以直接访问Zero-Copy memory. 使用Zero-Copy memory需要以下三个步骤：</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/05/29/Cuda/#more" rel="contents">
