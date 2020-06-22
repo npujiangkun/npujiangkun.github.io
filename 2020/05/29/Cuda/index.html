@@ -94,12 +94,12 @@
 <meta property="og:site_name" content="Voyager">
 <meta property="og:description" content="引言：Cuda随笔.  Zero-Copy memory： 一般情况下，CPU是无法访问GPU的变量的，GPU也无法访问CPU的变量. 只有一种例外：Zero-Copy memory, 是指映射到GPU虚拟地址空间的pinned(non-pageable) memory. GPU和CPU都可以直接访问Zero-Copy memory. 使用Zero-Copy memory需要以下三个步骤：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="c:%5CUsers%5CJiangkun%5CAppData%5CLocal%5CTemp%5C1590845960180.png">
+<meta property="og:image" content="http://yoursite.com/.com//C:%5CUsers%5CJiangkun%5CAppData%5CLocal%5CTemp%5C1590845960180.png">
 <meta property="og:updated_time" content="2020-05-30T13:45:55.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cuda">
 <meta name="twitter:description" content="引言：Cuda随笔.  Zero-Copy memory： 一般情况下，CPU是无法访问GPU的变量的，GPU也无法访问CPU的变量. 只有一种例外：Zero-Copy memory, 是指映射到GPU虚拟地址空间的pinned(non-pageable) memory. GPU和CPU都可以直接访问Zero-Copy memory. 使用Zero-Copy memory需要以下三个步骤：">
-<meta name="twitter:image" content="c:%5CUsers%5CJiangkun%5CAppData%5CLocal%5CTemp%5C1590845960180.png">
+<meta name="twitter:image" content="http://yoursite.com/.com//C:%5CUsers%5CJiangkun%5CAppData%5CLocal%5CTemp%5C1590845960180.png">
 
 
 
@@ -431,7 +431,7 @@ cudaHostAllocMapped： 表示pinned memory会被映射到GPU的虚拟地址空�
 </ol>
 <p>需要注意两点: (1) CPU和GPU在同时访问的zero-copy memory的时候需要做好同步，否则会出现数据一致性问题；(2) Zero-Copy memory只有在CPU和GPU之间进行小规模的数据交换/共享的时候才能够提升性能，因为每次memory transaction都需要经过PCIe总线，latency比较大，因此不适用大规模的数据交换/共享.</p>
 <p><strong>Unified Virtual Addressing:</strong> 在compute capability 2.0之后的Devices上支持一种特殊的寻址模式Unified Virtual Addressing, UVA. 在这种寻址模式下，CPU和GPU共享同一个虚拟地址空间，因此对于一个指针来说，CPU和GPU都可以通过它访问同一块memory. 类似Mali GPU的PMEM(CPU_VA == GPU_VA).</p>
-<p><img src="C:%5CUsers%5CJiangkun%5CAppData%5CLocal%5CTemp%5C1590845960180.png" alt="1590845960180"></p>
+<p><img src="/.com//C:%5CUsers%5CJiangkun%5CAppData%5CLocal%5CTemp%5C1590845960180.png" alt="1590845960180"></p>
 <p>我们知道，在UVA出现之前，我们需要分别管理CPU VA和GPU VA，比较麻烦；在UVA出现之后，CPU VA和GPU VA是统一的，代码比较简洁， 例如：</p>
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -519,6 +519,10 @@ cudaHostAllocMapped： 表示pinned memory会被映射到GPU的虚拟地址空�
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/06/22/STL/" rel="prev" title="'STL'">
+                'STL' <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -589,7 +593,7 @@ cudaHostAllocMapped： 表示pinned memory会被映射到GPU的虚拟地址空�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

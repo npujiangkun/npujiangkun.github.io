@@ -470,6 +470,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/22/STL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="清风小白">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/photo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voyager">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/22/STL/" itemprop="url">'STL'</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-22T22:39:02+08:00">
+                2020-06-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-22T22:39:40+08:00">
+                2020-06-22
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>智能指针</strong>
+头文件: #include &lt;memory&gt;
+<code>shared_ptr:</code> 共享指针是C++ 11引入的RAII类型的模板类，用于管理new动态分配出来的堆上内存。
+(1) RAII: 很多时候我们在new了一块堆内存之后很容易忘记delete掉该内存, 造成内存泄漏. shared_ptr作为一种RAII类型的模板类，在析构函数中会delete掉所管理的堆内存，避免了内存泄漏.
+(2) 使用shared_ptr像使用普通的指针一样，支持-&gt;和*操作符.
+(3) 多个shared_ptr可以指向同一块堆内存，当调用shared_ptr的拷贝构造函数或者拷贝赋值运算符时，会将refcount++, 当调用reset()或者析构时会将refcount--; 因此当所有的shared_ptr都析构时，该堆内存被释放. 这也是被称为共享指针的原因.
+<code>创建shared_ptr:</code>
+(1) shared_ptr&lt;T&gt; sp(pointer); 通过一个堆上的指针pointer来构造shared_ptr;
+(2) shared_ptr&lt;T&gt; sp= std::make_shared&lt;int&gt;(args..); 通过make_shared()全局函数来创建一个shared_ptr;
+(3) shared_ptr&lt;T&gt; sp(shared_ptr&lt;T&gt; other); shared_ptr&lt;T&gt; sp = other; 通过拷贝构造函数或者拷贝赋值运算符来创建shared_ptr;
+例子：<a href="http://c.biancheng.net/view/430.html" target="_blank" rel="noopener">http://c.biancheng.net/view/430.html</a></p>
+<p><code>类的方法：</code>
+get(): 获取shared_ptr所管理的指针;
+reset(): 重新设置shared_ptr所管理的指针，此处会涉及旧的堆内存refcount--, 新的堆内存refcount++;
+*/-&gt;: 解引用运算符与普通的指针一样.
+use_count: 获取当前refcount的值.
+构造/析构/拷贝构造/拷贝赋值运算符.
+swap: 交换两个shared_ptr的内容, 注意两个智能指针必须是相同类型的.</p>
+<p><code>循环引用：</code> 假设类A中有成员shared_ptr&lt;B&gt; sp_b;类B中有成员shared_ptr&lt;A&gt; sp_a; 当sp_a, sp_b分别管理一个A对象和B对象的指针时，就构成了循环引用，导致A和B对象都无法释放，因为A在释放时发现B持有了A的引用计数，因此无法析构A；B也是如此，造成内存泄漏。解决的办法是通过weak_ptr，将类A，B中的shared_ptr之一改成weak_ptr即可. 因为weak_ptr虽然指向shared_ptr所指向的堆内存，但是并没有增加引用计数.
+参考：<a href="https://blog.csdn.net/albertsh/article/details/82286999" target="_blank" rel="noopener">https://blog.csdn.net/albertsh/article/details/82286999</a></p>
+<p><code>线程安全：</code>shared_ptr内部的引用计数是线程安全的，堆内存不是线程安全的.
+<code>注意事项：</code>
+(1) 禁止将堆内存的指针pointer直接通过=赋值给shared_ptr, 必须通过构造函数; 即shared_ptr&lt;T&gt; sp = pointer;是不允许的.
+(2) 禁止通过栈内存的指针pointer构造shared_ptr. 编译期没问题，运行时有问题;
+(3) 禁止通过堆内存的指针pointer构造多个shared_ptr. 因为会导致内存重复delete的问题. 例如：shared_ptr&lt;T&gt; a(pointer); shared_ptr&lt;T&gt; b(pointer);</p>
+<p>weak_ptr: 与shared_ptr不同，当weak_ptr指向shared_ptr的堆上内存时，并不会增加该内存的引用计数.
+<code>类的方法：</code>
+lock(): 获取weak_ptr对应的shared_ptr;
+expired(): 检查weak_ptr所管理的shared_ptr是否堆内存已经释放了;
+use_count(): 获取shared_ptr所管理的堆内存的refcount.
+*/-&gt;: 不支持.
+<code>注意事项：</code>
+(1) 与shared_ptr不同，不能够直接从一个堆上的指针来构造一个weak_ptr. 只能通过shared_ptr进行拷贝构造或者拷贝赋值运算符；
+(2) weak_ptr在设计之初就是为shared_ptr服务的，因此不增加引用计数就是它的核心功能；
+(3) 由于不知道什么时候weak_ptr所指向的对象就会被析构掉，所以使用之前请先使用<code>expired()</code>函数检测一下。</p>
+<p>unique_ptr:</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/29/Cuda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -985,7 +1152,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
